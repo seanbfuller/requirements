@@ -44,6 +44,13 @@ DEBUG=requirements:* npm run devstart
 
 Visit http://localhost:3000/
 
+
+# Seed the mongo db with test data
+
+```
+node populatedbtest
+```
+
 # Project Creation History
 
 Setup based on 

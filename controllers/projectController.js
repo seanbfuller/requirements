@@ -2,7 +2,12 @@ var async = require('async');
 
 var Project = require('../models/project');
 
-// Display list of all Projects.
+const { body,validationResult } = require('express-validator/check');
+const { sanitizeBody } = require('express-validator/filter');
+
+/**
+ * Display list of all Projects.
+ */
 exports.project_list = function(req, res, next) {
 
   Project.find({}, 'name_text name_machine')
@@ -14,7 +19,9 @@ exports.project_list = function(req, res, next) {
     
 };
 
-// Display detail page for a specific Project.
+/**
+ * Display detail page for a specific Project.
+ */
 exports.project_detail = function(req, res, next) {
 
   async.parallel(
@@ -41,15 +48,56 @@ exports.project_detail = function(req, res, next) {
 
 };
 
-// Display Project create form on GET.
-exports.project_create_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: Project create GET');
+/**
+ * Display Project create form on GET.
+ */
+exports.project_create_get = function(req, res, next) {
+  res.render('projects_form', { title: 'Create Project' });
 };
 
-// Handle Project create on POST.
-exports.project_create_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Project create POST');
-};
+/**
+ * Handle Project create on POST.
+ */
+exports.project_create_post = [
+   
+    // Validate that the name field is not empty.
+    body('name_text', 'Project name required').isLength({ min: 1 }).trim(),
+    body('name_machine', 'Machine name required').isLength({ min: 1 }).trim(),
+
+    // Sanitize (trim and escape) the name field.
+    sanitizeBody('name_text').trim().escape(),
+    sanitizeBody('name_machine').trim().escape(),
+
+    // Process request after validation and sanitization.
+    (req, res, next) => {
+
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+
+        // Create a project object with escaped and trimmed data.
+        var project = new Project(
+          { 
+            name_text: req.body.name_text,
+            name_machine: req.body.name_machine,
+           }
+        );
+
+
+        if (!errors.isEmpty()) {
+            // There are errors. Render the form again with sanitized values/error messages.
+            res.render('projects_form', { title: 'Create Project', project: project, errors: errors.array()});
+            return;
+        }
+        else {
+          // Data from form is valid.
+          project.save(function (err) {
+           if (err) { return next(err); }
+           // Genre saved. Redirect to project detail page.
+           res.redirect(project.url);
+          });
+        }
+    }
+];
 
 // Display Project delete form on GET.
 exports.project_delete_get = function(req, res) {

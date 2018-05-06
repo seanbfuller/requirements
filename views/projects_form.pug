@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='name_text') Project name:
+      input#name.form-control(type='text', placeholder='' name='name_text' value=(undefined===project ? '' : project.name_text))
+    div.form-group
+      label(for='name_machine') Machine name:
+      input#name.form-control(type='text', placeholder='' name='name_machine' value=(undefined===project ? '' : project.name_machine))
+    button.btn.btn-primary(type='submit') Submit

@@ -10,10 +10,6 @@ var project_controller = require('../controllers/projectController');
 // GET page to list all projects
 router.get('/', project_controller.project_list);
 
-// GET request for one Project.
-router.get('/:id', project_controller.project_detail);
-
-
 // GET request for creating a Book. NOTE This must come before routes that display Book (uses id).
 router.get('/create', project_controller.project_create_get);
 
@@ -31,5 +27,9 @@ router.get('/:id/update', project_controller.project_update_get);
 
 // POST request to update Book.
 router.post('/:id/update', project_controller.project_update_post);
+
+// GET request for one Project.
+router.get('/:id', project_controller.project_detail);
+
 
 module.exports = router;

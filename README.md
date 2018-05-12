@@ -36,10 +36,16 @@ Start Mongodb
 mongod
 ```
 
-start express with nodemon to automate restarting on change.
+Start express with nodemon to automate restarting on change.
 
 ```
 DEBUG=requirements:* npm run devstart
+```
+
+Start the gulp process to watch for css changes and use browser-sync
+
+```
+gulp
 ```
 
 Visit http://localhost:3000/

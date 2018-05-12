@@ -1,6 +1,9 @@
 extends layout
 
 block content
+  p 
+    a(href=project.url + '/update') Edit
+
   h1 Project: #{project.name_text}
 
   p #[strong Machine name]: #{project.name_machine}

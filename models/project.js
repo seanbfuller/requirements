@@ -10,10 +10,10 @@ var ProjectSchema = new Schema(
 
 // Virtual for URL
 ProjectSchema
-.virtual('url')
-.get(function () {
-  return '/projects/' + this._id;
-});
+  .virtual('url')
+  .get(function () {
+    return '/projects/' + this._id;
+  });
 
 // Export model
 module.exports = mongoose.model('Project', ProjectSchema);

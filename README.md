@@ -1,7 +1,9 @@
-# requirements
+# Requirements
 
 
-# Setup a MondoDB with brew
+## Install MongoDB
+
+### OSX instructions
 
 If needed, address brew permission issue with High Sierra OSX
 https://github.com/Homebrew/brew/issues/3228
@@ -21,8 +23,23 @@ sudo mkdir -p /data/db
 sudo chown $(whoami) /data/db
 ```
 
+## Install NPM
+
+### OSX instructions
+
+```
+brew install node
+```
+
+## Install gulp
+
+```
+npm install -g gulp
+```
 
 # Getting Started
+
+Perform the following commands in multiple terminals tabs:
 
 Rebuild dependencies 
 
